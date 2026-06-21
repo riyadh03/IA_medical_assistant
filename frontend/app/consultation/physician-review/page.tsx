@@ -11,21 +11,55 @@ import { ArrowRight, CheckCircle2, AlertCircle } from 'lucide-react'
 
 export default function PhysicianReviewPage() {
   const router = useRouter()
+  const [workflowId, setWorkflowId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [consultation, setConsultation] = useState<any>(null)
+  const [diagnosticSummary, setDiagnosticSummary] = useState('')
+  const [interimCare, setInterimCare] = useState('')
   const [review, setReview] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    // Load consultation data
-    const saved = localStorage.getItem('currentConsultation')
-    if (!saved) {
+    const wId = localStorage.getItem('currentWorkflowId')
+    if (!wId) {
       router.push('/consultation/create')
-    } else {
-      setConsultation(JSON.parse(saved))
-      setIsLoading(false)
+      return
     }
+    setWorkflowId(wId)
+
+    async function loadData() {
+      try {
+        const res = await fetch(`http://localhost:8080/consultation/${wId}`)
+        if (!res.ok) {
+          throw new Error("Failed to load status")
+        }
+        const data = await res.json()
+        
+        if (data.status === 'completed') {
+          router.push('/consultation/final-report')
+          return
+        }
+        if (data.status === 'waiting_patient') {
+          router.push('/consultation/interview')
+          return
+        }
+
+        setConsultation({
+          patientName: data.patient_name,
+          age: String(data.patient_age),
+          gender: data.patient_gender,
+          chiefComplaint: data.chief_complaint
+        })
+        setDiagnosticSummary(data.diagnostic_summary || '')
+        setInterimCare(data.interim_care || '')
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadData()
   }, [router])
 
   const workflowSteps = [
@@ -36,19 +70,32 @@ export default function PhysicianReviewPage() {
     { id: '5', label: 'Final Report', completed: false },
   ]
 
-  const mockClinicalsummary = `Based on the patient interview, the following assessment has been generated. Clinical findings support further investigation.`
-
-  const mockRecommendation = `Initial assessment recommends supportive care, continued monitoring, and timely physician evaluation.`
-
   const handleSubmit = async (approved: boolean) => {
     if (!review.trim()) {
       setErrors({ review: 'Physician review is required' })
       return
     }
     setIsSubmitting(true)
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    localStorage.setItem('physicianReview', JSON.stringify({ approved, review, timestamp: new Date() }))
-    router.push('/consultation/final-report')
+    setErrors({})
+    try {
+      const res = await fetch(`http://localhost:8080/consultation/${workflowId}/physician-review`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ physician_review: review })
+      })
+      if (!res.ok) {
+        throw new Error("Failed to submit physician review")
+      }
+      const data = await res.json()
+      
+      localStorage.setItem('physicianReview', JSON.stringify({ approved, review, timestamp: new Date() }))
+      router.push('/consultation/final-report')
+    } catch (err) {
+      console.error(err)
+      setErrors({ submit: "Failed to submit review to server. Please try again." })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -90,21 +137,26 @@ export default function PhysicianReviewPage() {
 
             {/* AI Clinical Summary (Read-only) */}
             <Card title="AI Clinical Summary" subtitle="For Reference">
-              <div className="bg-muted/30 p-4 rounded-lg">
-                <p className="text-sm text-foreground leading-relaxed">{mockClinicalsummary}</p>
+              <div className="bg-muted/30 p-4 rounded-lg whitespace-pre-line">
+                <p className="text-sm text-foreground leading-relaxed">{diagnosticSummary}</p>
               </div>
             </Card>
 
             {/* AI Interim Recommendation (Read-only) */}
             <Card title="Interim Recommendation" subtitle="For Reference">
-              <div className="bg-muted/30 p-4 rounded-lg">
-                <p className="text-sm text-foreground leading-relaxed">{mockRecommendation}</p>
+              <div className="bg-muted/30 p-4 rounded-lg whitespace-pre-line text-sm text-foreground leading-relaxed">
+                {interimCare}
               </div>
             </Card>
 
             {/* Physician Review Input */}
             <Card title="Physician Review" subtitle="Add your clinical assessment and recommendations">
               <div className="space-y-4">
+                {errors.submit && (
+                  <div className="p-3 rounded bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20">
+                    {errors.submit}
+                  </div>
+                )}
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Clinical Assessment & Recommendations *
@@ -134,14 +186,14 @@ export default function PhysicianReviewPage() {
                     onClick={() => handleSubmit(false)}
                     disabled={isSubmitting}
                     variant="outline"
-                    className="flex-1"
+                    className="flex-1 cursor-pointer"
                   >
                     Request Modifications
                   </Button>
                   <Button
                     onClick={() => handleSubmit(true)}
                     disabled={isSubmitting || !review.trim()}
-                    className="flex-1 bg-green-600 text-white hover:bg-green-700 flex items-center justify-center gap-2"
+                    className="flex-1 bg-green-600 text-white hover:bg-green-700 flex items-center justify-center gap-2 cursor-pointer"
                   >
                     {isSubmitting ? 'Processing...' : 'Approve & Generate Report'}
                     <CheckCircle2 className="w-4 h-4" />

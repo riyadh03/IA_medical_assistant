@@ -7,30 +7,66 @@ import { Card } from '@/components/shared/card'
 import { Button } from '@/components/ui/button'
 import { ProgressTimeline } from '@/components/shared/progress-timeline'
 import { StatusBadge } from '@/components/shared/status-badge'
-import { FileText, Download, Home, Copy, CheckCircle2 } from 'lucide-react'
+import { FileText, Download, Home, Copy, CheckCircle2, Plus } from 'lucide-react'
 import { generateConsultationPDF, type ConsultationReportData } from '@/lib/pdf-generator'
 
 export default function FinalReportPage() {
   const router = useRouter()
+  const [workflowId, setWorkflowId] = useState<string | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [consultation, setConsultation] = useState<any>(null)
-  const [answers, setAnswers] = useState<any>(null)
-  const [review, setReview] = useState<any>(null)
+  const [questionAnswers, setQuestionAnswers] = useState<any[]>([])
+  const [diagnosticSummary, setDiagnosticSummary] = useState('')
+  const [interimCare, setInterimCare] = useState('')
+  const [physicianReview, setPhysicianReview] = useState('')
+  const [finalReport, setFinalReport] = useState('')
   const [copied, setCopied] = useState(false)
   const [isGeneratingPDF, setIsGeneratingPDF] = useState(false)
 
   useEffect(() => {
-    const saved = localStorage.getItem('currentConsultation')
-    if (!saved) {
+    const wId = localStorage.getItem('currentWorkflowId')
+    if (!wId) {
       router.push('/consultation/create')
-    } else {
-      setConsultation(JSON.parse(saved))
-      const savedAnswers = localStorage.getItem('consultationAnswers')
-      if (savedAnswers) setAnswers(JSON.parse(savedAnswers))
-      const savedReview = localStorage.getItem('physicianReview')
-      if (savedReview) setReview(JSON.parse(savedReview))
-      setIsLoading(false)
+      return
     }
+    setWorkflowId(wId)
+
+    async function loadReport() {
+      try {
+        const res = await fetch(`http://localhost:8080/consultation/${wId}`)
+        if (!res.ok) {
+          throw new Error("Failed to load report data")
+        }
+        const data = await res.json()
+        
+        if (data.status !== 'completed' && !data.final_report) {
+          if (data.status === 'waiting_physician') {
+            router.push('/consultation/clinical-summary')
+            return
+          } else {
+            router.push('/consultation/interview')
+            return
+          }
+        }
+
+        setConsultation({
+          patientName: data.patient_name,
+          age: String(data.patient_age),
+          gender: data.patient_gender,
+          chiefComplaint: data.chief_complaint
+        })
+        setQuestionAnswers(data.question_answers || [])
+        setDiagnosticSummary(data.diagnostic_summary || '')
+        setInterimCare(data.interim_care || '')
+        setPhysicianReview(data.physician_review || '')
+        setFinalReport(data.final_report || '')
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadReport()
   }, [router])
 
   const workflowSteps = [
@@ -42,31 +78,24 @@ export default function FinalReportPage() {
   ]
 
   const handleDownloadPDF = async () => {
-    if (!consultation || !answers) return
+    if (!consultation) return
 
     setIsGeneratingPDF(true)
     try {
       const reportData: ConsultationReportData = {
         patientName: consultation.patientName,
         age: consultation.age,
-        gender: consultation.gender === 'M' ? 'Male' : consultation.gender === 'F' ? 'Female' : 'Other',
+        gender: consultation.gender === 'M' || consultation.gender === 'Masculin' ? 'Male' : consultation.gender === 'F' || consultation.gender === 'Féminin' ? 'Female' : 'Other',
         chiefComplaint: consultation.chiefComplaint,
         consultationDate: new Date().toLocaleDateString(),
-        questions: [
-          { question: 'Symptom Duration', answer: String(answers.q1 || 'N/A') },
-          { question: 'Symptom Severity (1-10)', answer: String(answers.q2 || 'N/A') },
-          { question: 'Symptom Frequency', answer: String(answers.q3 || 'N/A') },
-          { question: 'Current Medications', answer: String(answers.q4 || 'N/A') },
-          { question: 'Medical History & Allergies', answer: String(answers.q5 || 'N/A') },
-        ],
-        clinicalSummary:
-          'Based on the comprehensive patient interview, a thorough clinical assessment has been completed. The patient presented with relevant symptoms requiring professional medical evaluation. All interview data has been documented and analyzed.',
-        aiRecommendation:
-          'Initial assessment recommends immediate physician consultation for symptom validation, appropriate diagnostic testing as needed, and clinical management planning. Patient requires professional medical evaluation and ongoing monitoring.',
-        physicianReview:
-          review?.review ||
-          'Physician review and validation of clinical assessment. All recommendations require physician approval before implementation.',
-        finalStatus: 'Consultation Completed - Ready for Physician Review',
+        questions: questionAnswers.map((qa, idx) => ({
+          question: qa.question || `Question ${idx + 1}`,
+          answer: qa.answer || 'N/A'
+        })),
+        clinicalSummary: diagnosticSummary,
+        aiRecommendation: interimCare,
+        physicianReview: physicianReview || 'Physician review completed.',
+        finalStatus: 'Completed',
       }
 
       const fileName = `clinical-report-${consultation.patientName.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.pdf`
@@ -80,23 +109,8 @@ export default function FinalReportPage() {
   }
 
   const handleCopyReport = () => {
-    const reportText = `
-CLINICAL ORIENTATION SYSTEM - FINAL REPORT
-
-Patient Information:
-- Name: ${consultation?.patientName}
-- Age: ${consultation?.age}
-- Chief Complaint: ${consultation?.chiefComplaint}
-
-Interview Responses:
-${answers ? Object.entries(answers).map(([k, v]) => `Q${k}: ${v}`).join('\n') : 'N/A'}
-
-Physician Review:
-${review?.review || 'Pending'}
-
-Generated: ${new Date().toLocaleString()}
-    `.trim()
-    navigator.clipboard.writeText(reportText)
+    if (!finalReport) return
+    navigator.clipboard.writeText(finalReport)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
   }
@@ -137,7 +151,7 @@ Generated: ${new Date().toLocaleString()}
                 <div>
                   <p className="text-xs font-medium text-muted-foreground mb-1">Gender</p>
                   <p className="text-sm font-semibold text-foreground">
-                    {consultation?.gender === 'M' ? 'Male' : consultation?.gender === 'F' ? 'Female' : 'Other'}
+                    {consultation?.gender === 'M' || consultation?.gender === 'Masculin' ? 'Male' : consultation?.gender === 'F' || consultation?.gender === 'Féminin' ? 'Female' : 'Other'}
                   </p>
                 </div>
                 <div>
@@ -151,13 +165,13 @@ Generated: ${new Date().toLocaleString()}
             <Card title="Patient Interview Summary">
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="font-medium text-foreground mb-2">Questions Answered: 5 of 5</p>
-                  {answers && (
-                    <div className="space-y-2 text-muted-foreground">
-                      {Object.entries(answers).map(([k, v], idx) => (
-                        <div key={k} className="flex gap-3">
-                          <span className="font-medium text-primary">Q{idx + 1}:</span>
-                          <span>{String(v)}</span>
+                  <p className="font-semibold text-foreground mb-3">Questions Answered: 5 of 5</p>
+                  {questionAnswers && (
+                    <div className="space-y-3 text-muted-foreground">
+                      {questionAnswers.map((qa, idx) => (
+                        <div key={idx} className="flex flex-col gap-1 border-b border-border pb-2 last:border-0 last:pb-0">
+                          <span className="font-medium text-primary text-xs">Q{idx + 1}: {qa.question}</span>
+                          <span className="text-foreground pl-3 text-sm">R : {qa.answer}</span>
                         </div>
                       ))}
                     </div>
@@ -168,25 +182,31 @@ Generated: ${new Date().toLocaleString()}
 
             {/* Clinical Summary */}
             <Card title="Clinical Summary">
-              <p className="text-sm text-foreground leading-relaxed">
-                Based on the patient interview and clinical presentation, a comprehensive assessment has been generated. The AI-generated summary identified key clinical features requiring physician validation.
-              </p>
+              <div className="whitespace-pre-line text-sm text-foreground leading-relaxed bg-muted/30 p-4 rounded-lg">
+                {diagnosticSummary}
+              </div>
             </Card>
 
             {/* Interim Recommendation */}
             <Card title="Interim Recommendation">
-              <p className="text-sm text-foreground leading-relaxed">
-                Initial assessment recommends supportive care, monitoring, and timely physician evaluation for appropriate management and follow-up.
-              </p>
+              <div className="whitespace-pre-line text-sm text-foreground leading-relaxed bg-muted/30 p-4 rounded-lg">
+                {interimCare}
+              </div>
             </Card>
 
             {/* Physician Review */}
             <Card title="Physician Review & Final Recommendations">
-              <div className="bg-muted/30 p-4 rounded-lg">
+              <div className="bg-muted/30 p-4 rounded-lg whitespace-pre-line">
                 <p className="text-sm text-foreground leading-relaxed">
-                  {review?.review ||
-                    'Physician review pending. This section will contain the physician\'s clinical assessment and approved recommendations.'}
+                  {physicianReview || 'Physician review pending.'}
                 </p>
+              </div>
+            </Card>
+
+            {/* Structured Final Report */}
+            <Card title="Rapport Final Complet Structuré" subtitle="Rapport Généré par l'Agent">
+              <div className="bg-primary/5 border border-primary/20 p-5 rounded-lg whitespace-pre-line text-sm text-foreground leading-relaxed font-mono">
+                {finalReport}
               </div>
             </Card>
 
@@ -195,7 +215,7 @@ Generated: ${new Date().toLocaleString()}
               <div>
                 <p className="font-semibold text-sm text-accent mb-2">Important Disclaimer</p>
                 <p className="text-xs text-foreground leading-relaxed">
-                  This system is an educational tool demonstrating multi-agent clinical workflow simulation. It does not provide actual medical diagnosis or treatment recommendations. All clinical decisions must be made by qualified healthcare professionals with appropriate medical training and licensing. Patients should always consult with licensed physicians for medical advice, diagnosis, and treatment.
+                  Ce système est un exercice académique et ne doit pas être présenté comme un dispositif médical ni fournir de diagnostic définitif. Ce système ne remplace pas une consultation médicale.
                 </p>
               </div>
             </Card>
@@ -214,7 +234,7 @@ Generated: ${new Date().toLocaleString()}
                 <Button
                   onClick={handleDownloadPDF}
                   disabled={isGeneratingPDF}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 cursor-pointer"
                 >
                   {isGeneratingPDF ? (
                     <>
@@ -231,10 +251,10 @@ Generated: ${new Date().toLocaleString()}
                 <Button
                   onClick={handleCopyReport}
                   variant="outline"
-                  className="w-full flex items-center justify-center gap-2"
+                  className="w-full flex items-center justify-center gap-2 cursor-pointer"
                 >
                   <Copy className="w-4 h-4" />
-                  {copied ? 'Copied!' : 'Copy Text'}
+                  {copied ? 'Copied!' : 'Copy Final Report'}
                 </Button>
               </div>
             </Card>
@@ -258,12 +278,12 @@ Generated: ${new Date().toLocaleString()}
             {/* Start New Consultation */}
             <Button
               onClick={() => {
+                localStorage.removeItem('currentWorkflowId')
                 localStorage.removeItem('currentConsultation')
-                localStorage.removeItem('consultationAnswers')
                 localStorage.removeItem('physicianReview')
                 router.push('/consultation/create')
               }}
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2"
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               Start New Consultation
@@ -273,7 +293,7 @@ Generated: ${new Date().toLocaleString()}
             <Button
               onClick={() => router.push('/')}
               variant="outline"
-              className="w-full flex items-center justify-center gap-2"
+              className="w-full flex items-center justify-center gap-2 cursor-pointer"
             >
               <Home className="w-4 h-4" />
               Back to Dashboard
@@ -282,23 +302,5 @@ Generated: ${new Date().toLocaleString()}
         </div>
       )}
     </AppLayout>
-  )
-}
-
-function Plus({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M12 4v16m8-8H4"
-      />
-    </svg>
   )
 }

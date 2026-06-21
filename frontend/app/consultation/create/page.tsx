@@ -61,11 +61,31 @@ export default function ConsultationCreatePage() {
       return
     }
     setIsSubmitting(true)
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    // Store consultation data in localStorage for demo
-    localStorage.setItem('currentConsultation', JSON.stringify(form))
-    router.push('/consultation/interview')
+    try {
+      const res = await fetch("http://localhost:8080/consultation/start", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          patient_name: form.patientName,
+          patient_age: parseInt(form.age),
+          patient_gender: form.gender === 'M' ? 'Masculin' : form.gender === 'F' ? 'Féminin' : 'Autre',
+          chief_complaint: form.chiefComplaint,
+        })
+      })
+      if (!res.ok) {
+        throw new Error("Failed to start consultation")
+      }
+      const data = await res.json()
+      // Store current workflow ID and consultation details in localStorage
+      localStorage.setItem('currentWorkflowId', data.workflow_id)
+      localStorage.setItem('currentConsultation', JSON.stringify(form))
+      router.push('/consultation/interview')
+    } catch (err) {
+      console.error(err)
+      setErrors({ submit: "Failed to connect to the medical assistant service. Please check if the backend is running." })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -75,6 +95,11 @@ export default function ConsultationCreatePage() {
         <div className="lg:col-span-2">
           <Card title="Patient Information" subtitle="Enter basic patient details to begin consultation">
             <form onSubmit={handleSubmit} className="space-y-6">
+              {errors.submit && (
+                <div className="p-3 rounded bg-destructive/10 text-destructive text-sm font-medium border border-destructive/20">
+                  {errors.submit}
+                </div>
+              )}
               {/* Patient Name */}
               <div>
                 <label className="block text-sm font-medium text-foreground mb-2">

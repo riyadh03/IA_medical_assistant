@@ -13,16 +13,48 @@ export default function ClinicalSummaryPage() {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(true)
   const [consultation, setConsultation] = useState<any>(null)
+  const [diagnosticSummary, setDiagnosticSummary] = useState('')
+  const [interimCare, setInterimCare] = useState('')
 
   useEffect(() => {
-    // Load consultation data
-    const saved = localStorage.getItem('currentConsultation')
-    if (!saved) {
+    const wId = localStorage.getItem('currentWorkflowId')
+    if (!wId) {
       router.push('/consultation/create')
-    } else {
-      setConsultation(JSON.parse(saved))
-      setIsLoading(false)
+      return
     }
+
+    async function loadSummary() {
+      try {
+        const res = await fetch(`http://localhost:8080/consultation/${wId}`)
+        if (!res.ok) {
+          throw new Error("Failed to load summary")
+        }
+        const data = await res.json()
+        
+        if (data.status === 'completed') {
+          router.push('/consultation/final-report')
+          return
+        }
+        if (data.status === 'waiting_patient') {
+          router.push('/consultation/interview')
+          return
+        }
+
+        setConsultation({
+          patientName: data.patient_name,
+          age: String(data.patient_age),
+          gender: data.patient_gender,
+          chiefComplaint: data.chief_complaint
+        })
+        setDiagnosticSummary(data.diagnostic_summary || '')
+        setInterimCare(data.interim_care || '')
+      } catch (err) {
+        console.error(err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    loadSummary()
   }, [router])
 
   const workflowSteps = [
@@ -32,15 +64,6 @@ export default function ClinicalSummaryPage() {
     { id: '4', label: 'Physician Review', completed: false },
     { id: '5', label: 'Final Report', completed: false },
   ]
-
-  const mockClinicalsummary = `Based on the patient interview and chief complaint of "${consultation?.chiefComplaint || 'condition'}", the following assessment has been generated:
-
-Patient presents with symptoms requiring evaluation. Physical examination findings and patient-reported symptoms suggest potential considerations. The temporal pattern indicates acute onset requiring timely assessment.`
-
-  const mockRecommendation = `1. Immediate actions: Monitor vital signs and ensure patient comfort
-2. Diagnostic workup: Consider relevant investigations based on clinical presentation
-3. Initial management: Supportive care and symptom management
-4. Follow-up: Schedule physician review for comprehensive assessment and formal recommendations`
 
   return (
     <AppLayout title="Clinical Summary">
@@ -69,32 +92,27 @@ Patient presents with symptoms requiring evaluation. Physical examination findin
                 <div>
                   <p className="text-xs font-medium text-muted-foreground mb-1">Gender</p>
                   <p className="text-sm font-semibold text-foreground">
-                    {consultation?.gender === 'M' ? 'Male' : consultation?.gender === 'F' ? 'Female' : 'Other'}
+                    {consultation?.gender === 'M' || consultation?.gender === 'Masculin' ? 'Male' : consultation?.gender === 'F' || consultation?.gender === 'Féminin' ? 'Female' : 'Other'}
                   </p>
                 </div>
                 <div>
                   <p className="text-xs font-medium text-muted-foreground mb-1">Status</p>
-                  <StatusBadge status="in-progress">Awaiting Review</StatusBadge>
+                  <StatusBadge status="review">Awaiting Review</StatusBadge>
                 </div>
               </div>
             </Card>
 
             {/* Clinical Summary */}
             <Card title="Clinical Summary" subtitle="AI-Generated Assessment">
-              <div className="space-y-4">
-                <p className="text-sm text-foreground leading-relaxed">{mockClinicalsummary}</p>
+              <div className="space-y-4 bg-muted/30 p-4 rounded-lg whitespace-pre-line">
+                <p className="text-sm text-foreground leading-relaxed">{diagnosticSummary}</p>
               </div>
             </Card>
 
             {/* Interim Care Recommendation */}
             <Card title="Interim Care Recommendation" subtitle="Preliminary Guidance">
-              <div className="space-y-3">
-                {mockRecommendation.split('\n').map((line, idx) => (
-                  <div key={idx} className="flex gap-3">
-                    <div className="text-primary font-bold text-sm min-w-fit">{idx + 1}.</div>
-                    <p className="text-sm text-foreground">{line.replace(/^\d+\.\s/, '')}</p>
-                  </div>
-                ))}
+              <div className="space-y-3 bg-muted/30 p-4 rounded-lg whitespace-pre-line text-sm text-foreground leading-relaxed">
+                {interimCare}
               </div>
             </Card>
 
@@ -127,7 +145,7 @@ Patient presents with symptoms requiring evaluation. Physical examination findin
             {/* Next Step CTA */}
             <Button
               onClick={() => router.push('/consultation/physician-review')}
-              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2"
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2 cursor-pointer"
             >
               <Stethoscope className="w-4 h-4" />
               Proceed to Physician Review

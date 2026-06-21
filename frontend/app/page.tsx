@@ -1,5 +1,7 @@
 'use client'
 
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { AppLayout } from '@/components/layout/app-layout'
 import { Card } from '@/components/shared/card'
 import { Button } from '@/components/ui/button'
@@ -13,39 +15,54 @@ import {
 } from 'lucide-react'
 
 export default function HomePage() {
-  const recentConsultations = [
-    {
-      id: 1,
-      patientName: 'Jean Dupont',
-      age: 45,
-      chiefComplaint: 'Chest pain',
-      status: 'completed',
-      date: '2024-12-18',
-    },
-    {
-      id: 2,
-      patientName: 'Marie Martin',
-      age: 32,
-      chiefComplaint: 'Persistent headache',
-      status: 'in-review',
-      date: '2024-12-17',
-    },
-    {
-      id: 3,
-      patientName: 'Pierre Dupuis',
-      age: 58,
-      chiefComplaint: 'Shortness of breath',
-      status: 'pending',
-      date: '2024-12-16',
-    },
-  ]
+  const router = useRouter()
+  const [consultations, setConsultations] = useState<any[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchConsultations() {
+      try {
+        const res = await fetch("http://localhost:8080/consultation")
+        if (res.ok) {
+          const data = await res.json()
+          setConsultations(data)
+        }
+      } catch (err) {
+        console.error("Failed to fetch consultations", err)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchConsultations()
+  }, [])
 
   const stats = [
-    { label: 'Total Consultations', value: '24', icon: Activity },
-    { label: 'Completed', value: '18', icon: FileText },
-    { label: 'Under Review', value: '4', icon: MessageSquare },
-    { label: 'Success Rate', value: '95%', icon: Stethoscope },
+    { label: 'Total Consultations', value: String(consultations.length), icon: Activity },
+    { label: 'Completed', value: String(consultations.filter(c => c.status === 'completed').length), icon: FileText },
+    { label: 'Under Physician Review', value: String(consultations.filter(c => c.status === 'waiting_physician').length), icon: MessageSquare },
+    { label: 'Awaiting Patient Answer', value: String(consultations.filter(c => c.status === 'waiting_patient' || c.status === 'running').length), icon: Stethoscope },
   ]
+
+  const handleViewConsultation = (c: any) => {
+    localStorage.setItem('currentWorkflowId', c.workflow_id)
+    localStorage.setItem('currentConsultation', JSON.stringify({
+      patientName: c.patient_name,
+      age: String(c.patient_age),
+      gender: c.patient_gender,
+      chiefComplaint: c.chief_complaint
+    }))
+    
+    // Redirect based on status
+    if (c.status === 'completed') {
+      router.push('/consultation/final-report')
+    } else if (c.status === 'waiting_physician') {
+      router.push('/consultation/clinical-summary')
+    } else if (c.status === 'waiting_patient') {
+      router.push('/consultation/interview')
+    } else {
+      router.push('/consultation/interview')
+    }
+  }
 
   return (
     <AppLayout title="Dashboard" subtitle="Clinical Orientation System Overview">
@@ -71,7 +88,7 @@ export default function HomePage() {
         {/* Quick Actions */}
         <div className="flex gap-3">
           <Link href="/consultation/create" className="flex-1">
-            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2">
+            <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 flex items-center justify-center gap-2 cursor-pointer">
               <Plus className="w-4 h-4" />
               Start New Consultation
             </Button>
@@ -80,59 +97,67 @@ export default function HomePage() {
 
         {/* Recent Consultations */}
         <Card title="Recent Consultations">
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="text-xs font-medium text-muted-foreground border-b border-border">
-                <tr>
-                  <th className="text-left py-3 px-3">Patient</th>
-                  <th className="text-left py-3 px-3">Age</th>
-                  <th className="text-left py-3 px-3">Chief Complaint</th>
-                  <th className="text-left py-3 px-3">Status</th>
-                  <th className="text-left py-3 px-3">Date</th>
-                  <th className="text-left py-3 px-3">Action</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {recentConsultations.map((consultation) => (
-                  <tr key={consultation.id} className="hover:bg-muted/30">
-                    <td className="py-3 px-3 font-medium text-foreground">
-                      {consultation.patientName}
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">
-                      {consultation.age}
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">
-                      {consultation.chiefComplaint}
-                    </td>
-                    <td className="py-3 px-3">
-                      <span
-                        className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
-                          consultation.status === 'completed'
-                            ? 'bg-green-500/20 text-green-700 dark:text-green-400'
-                            : consultation.status === 'in-review'
-                              ? 'bg-accent/20 text-accent-foreground'
-                              : 'bg-muted text-muted-foreground'
-                        }`}
-                      >
-                        {consultation.status}
-                      </span>
-                    </td>
-                    <td className="py-3 px-3 text-muted-foreground">
-                      {consultation.date}
-                    </td>
-                    <td className="py-3 px-3">
-                      <Link
-                        href={`/consultation/${consultation.id}`}
-                        className="text-primary hover:underline flex items-center gap-1"
-                      >
-                        View <ArrowRight className="w-3 h-3" />
-                      </Link>
-                    </td>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary" />
+            </div>
+          ) : consultations.length === 0 ? (
+            <p className="text-center py-8 text-muted-foreground text-sm">No consultations found. Start a new one to begin.</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead className="text-xs font-medium text-muted-foreground border-b border-border">
+                  <tr>
+                    <th className="text-left py-3 px-3">Patient</th>
+                    <th className="text-left py-3 px-3">Age</th>
+                    <th className="text-left py-3 px-3">Chief Complaint</th>
+                    <th className="text-left py-3 px-3">Status</th>
+                    <th className="text-left py-3 px-3">Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {consultations.map((consultation) => (
+                    <tr key={consultation.workflow_id} className="hover:bg-muted/30">
+                      <td className="py-3 px-3 font-medium text-foreground">
+                        {consultation.patient_name}
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground">
+                        {consultation.patient_age}
+                      </td>
+                      <td className="py-3 px-3 text-muted-foreground max-w-xs truncate">
+                        {consultation.chief_complaint}
+                      </td>
+                      <td className="py-3 px-3">
+                        <span
+                          className={`inline-flex px-2 py-1 rounded text-xs font-medium ${
+                            consultation.status === 'completed'
+                              ? 'bg-green-500/20 text-green-700 dark:text-green-400'
+                              : consultation.status === 'waiting_physician'
+                                ? 'bg-amber-500/20 text-amber-700 dark:text-amber-400'
+                                : 'bg-blue-500/20 text-blue-700 dark:text-blue-400'
+                          }`}
+                        >
+                          {consultation.status === 'completed' 
+                            ? 'Completed' 
+                            : consultation.status === 'waiting_physician' 
+                              ? 'Awaiting Physician' 
+                              : 'Awaiting Patient'}
+                        </span>
+                      </td>
+                      <td className="py-3 px-3">
+                        <button
+                          onClick={() => handleViewConsultation(consultation)}
+                          className="text-primary hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                        >
+                          View <ArrowRight className="w-3 h-3" />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
         </Card>
       </div>
     </AppLayout>

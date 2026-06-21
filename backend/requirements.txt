@@ -7,3 +7,4 @@ langchain-openai
 langgraph
 pydantic
 python-dotenv
+mcp>=1.1.2
