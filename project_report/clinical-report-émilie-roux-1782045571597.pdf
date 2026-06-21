@@ -1,0 +1,625 @@
+%PDF-1.3
+%ºß¬à
+3 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 4 0 R
+>>
+endobj
+4 0 obj
+<<
+/Length 4509
+>>
+stream
+0.5670000000000001 w
+0 G
+BT
+/F2 22 Tf
+25.2999999999999972 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 785.1970866141732586 Td
+(Clinical AI Orientation Report) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.42 0.447 0.502 rg
+56.6929133858267775 757.5762992125984283 Td
+(AI-Assisted Clinical Workflow System) Tj
+ET
+0.89 0.91 0.94 RG
+1.4173228346456694 w
+56.6929133858267775 719.2518897637794453 m
+538.5870866141731312 719.2518897637794453 l
+S
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 696.5747244094487769 Td
+(Patient Information) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 665.5977165354330509 Td
+(Name: Émilie Roux) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 646.1180314960629403 Td
+(Age: 24 years) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 626.6383464566929433 Td
+(Gender: Female) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 607.1586614173228327 Td
+(Date: 21/06/2026) Tj
+ET
+BT
+/F1 11 Tf
+12.6499999999999986 TL
+0. g
+56.6929133858267775 587.678976377952722 Td
+(Chief Complaint: Nausées, vomissements et crampes abdominales depuis la nuit dernière.) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 554.0260629921259579 Td
+(Patient Interview Summary) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.059 0.09 0.165 rg
+56.6929133858267775 523.0490551181102319 Td
+(Q1: Quelle est votre alimentation typique pendant les derniers jours, et avez-vous apporté des) Tj
+T* (changements récents dans votre régime alimentaire ?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.278 0.333 0.412 rg
+56.6929133858267775 497.4238582677165255 Td
+(A: Depuis deux jours, j'ai mangé plusieurs repas à l'extérieur, notamment un sandwich au poulet et une) Tj
+T* (salade dans un restaurant. Je n'ai pas fait de changement particulier dans mon alimentation habituelle, mais) Tj
+T* (certains aliments ne me semblaient pas très frais.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.059 0.09 0.165 rg
+56.6929133858267775 456.1514173228346181 Td
+(Q2: Avez-vous déjà pris des médicaments ou consommé des produits contenant des substances qui) Tj
+T* (pourraient agir sur votre système digestif, tels que les antacides, les anti-inflammatoires non) Tj
+T* (stéroïdiens \(AINS\) ou les diurétiques ?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.278 0.333 0.412 rg
+56.6929133858267775 420.5482677165354062 Td
+(A: Oui, j'ai pris de l'ibuprofène hier pour un mal de tête, mais je ne prends pas habituellement d'autres) Tj
+T* (médicaments et je n'ai pas utilisé d'antacides ou de diurétiques récemment.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.059 0.09 0.165 rg
+56.6929133858267775 389.2537795275590611 Td
+(Q3: Avez-vous ressenti des douleurs ou des ballonnements abdominaux, ou avez-vous eu des) Tj
+T* (déjections anormales, notamment après avoir consommé le sandwich au poulet et la salade dans le) Tj
+T* (restaurant ?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.278 0.333 0.412 rg
+56.6929133858267775 353.6506299212598492 Td
+(A: Oui, quelques heures après avoir mangé le sandwich et la salade, j'ai commencé à ressentir des crampes) Tj
+T* (abdominales et des ballonnements. J'ai également eu plusieurs épisodes de diarrhée depuis cette nuit.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.059 0.09 0.165 rg
+56.6929133858267775 322.3561417322835041 Td
+(Q4: Avez-vous déjà été exposée à un agent pathogène, tel qu'une bactérie, un virus ou un parasite,) Tj
+T* (qui pourrait être à l'origine de vos symptômes actuels de nausées, vomissements et crampes) Tj
+T* (abdominales ?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.278 0.333 0.412 rg
+56.6929133858267775 286.7529921259842922 Td
+(A: Pas que je sache. Je n’ai pas été malade récemment et je n’ai pas eu de contact avec des personnes) Tj
+T* (présentant des symptômes similaires. Je n’ai pas voyagé non plus et je ne pense pas avoir été exposée à) Tj
+T* (une infection particulière.) Tj
+ET
+BT
+/F2 10 Tf
+11.5 TL
+0.059 0.09 0.165 rg
+56.6929133858267775 245.480551181102328 Td
+(Q5: Avez-vous déjà été enceinte ou avez-vous eu des problèmes de grossesse dans le passé, et) Tj
+T* (avez-vous des antécédents familiaux de maladies digestives ou de problèmes de santé liés à la) Tj
+T* (grossesse ?) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0.278 0.333 0.412 rg
+56.6929133858267775 209.8774015748031161 Td
+(A: Non, je n’ai jamais été enceinte. Dans ma famille, il n’y a pas d’antécédents connus de maladies) Tj
+T* (digestives ou de complications liées à la grossesse.) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 167.2443307086614368 Td
+(Clinical Summary) Tj
+ET
+endstream
+endobj
+5 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 6 0 R
+>>
+endobj
+6 0 obj
+<<
+/Length 2965
+>>
+stream
+1.4173228346456694 w
+0.89 0.91 0.94 RG
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+56.6929133858267775 785.1970866141732586 Td
+(**Synthèse Clinique Préliminaire**) Tj
+T* () Tj
+T* (**Patient :** [Nom du patient] \(âge, sexe, etc.\)) Tj
+T* () Tj
+T* (**Plainte principale :** Nausées, vomissements et crampes abdominales depuis la nuit dernière.) Tj
+T* () Tj
+T* (**Analyse des réponses aux questions de suivi :**) Tj
+T* () Tj
+T* (* L'alimentation typique des derniers jours a été modifiée avec des repas à l'extérieur, notamment un) Tj
+T* (sandwich au poulet et une salade dans un restaurant.) Tj
+T* (* Des médicaments ont été pris, notamment de l'ibuprofène pour un mal de tête.) Tj
+T* (* Des douleurs abdominales et des ballonnements ont été ressentis après avoir consommé le sandwich et la) Tj
+T* (salade.) Tj
+T* (* Des épisodes de diarrhée ont été observés depuis cette nuit.) Tj
+T* () Tj
+T* (**Résultats de la recherche médicale externe :**) Tj
+T* () Tj
+T* (* Les symptômes persistent et peuvent indiquer des problèmes gastro-intestinaux tels que la gastroparesis.) Tj
+T* (* Les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements) Tj
+T* (ont été trouvés.) Tj
+T* () Tj
+T* (**Évaluation de sécurité \(Red Flags locaux\) :**) Tj
+T* () Tj
+T* (* Niveau de risque : LOW) Tj
+T* (* Recommandation urgente : False) Tj
+T* (* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation) Tj
+T* (standards et surveiller l'évolution.) Tj
+T* () Tj
+T* (**Orientation Clinique Préliminaire :**) Tj
+T* () Tj
+T* (* Il est recommandé de surveiller l'évolution des symptômes et de rechercher des signes de complications,) Tj
+T* (tels que des douleurs abdominales aigues, des ballonnements sévères ou des signes de déshydratation.) Tj
+T* (* Il est conseillé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée.) Tj
+T* (* Il est recommandé de suivre les recommandations de soins et les outils de prescription pour la gestion des) Tj
+T* (nausées et vomissements.) Tj
+T* () Tj
+T* (**Contexte :**) Tj
+T* () Tj
+T* (* La gastroparesis est une condition caractérisée par une défaillance du système digestif, entraînant des) Tj
+T* (nausées, des vomissements et des douleurs abdominales.) Tj
+T* (* Les antécédents familiaux de maladies digestives ou de problèmes de santé liés à la grossesse ne sont pas) Tj
+T* (connus.) Tj
+T* () Tj
+T* (**Conclusion :**) Tj
+T* () Tj
+T* (* Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications.) Tj
+T* (* Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge) Tj
+T* (appropriée.) Tj
+T* (* Il est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des) Tj
+T* (nausées et vomissements.) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 263.6222834645669764 Td
+(AI Recommendation) Tj
+ET
+endstream
+endobj
+7 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 8 0 R
+>>
+endobj
+8 0 obj
+<<
+/Length 3812
+>>
+stream
+1.4173228346456694 w
+0.89 0.91 0.94 RG
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+56.6929133858267775 785.1970866141732586 Td
+(**Recommandations intermédiaires générales et prudentes :**) Tj
+T* () Tj
+T* (1. **Surveillance continue** : Il est recommandé de surveiller l'évolution des symptômes, en particulier les) Tj
+T* (nausées, les vomissements et les douleurs abdominales. Il est important de rechercher des signes de) Tj
+T* (complications, tels que des ballonnements sévères ou des signes de déshydratation.) Tj
+T* (2. **Hydratation** : Il est conseillé de boire suffisamment d'eau pour éviter la déshydratation. Il est) Tj
+T* (recommandé de boire au moins 8 verres d'eau par jour.) Tj
+T* (3. **Alimentation modérée** : Il est recommandé de manger des repas légers et réguliers, en évitant les) Tj
+T* (aliments gras ou lourds qui peuvent aggraver les symptômes.) Tj
+T* (4. **Éviter les médicaments** : Il est conseillé d'éviter de prendre des médicaments qui peuvent aggraver les) Tj
+T* (symptômes, tels que l'ibuprofène.) Tj
+T* (5. **Consulter un médecin** : Il est recommandé de consulter un médecin pour une évaluation approfondie et) Tj
+T* (une prise en charge appropriée. Il est important de discuter des symptômes et des antécédents médicaux) Tj
+T* (pour déterminer la cause sous-jacente des symptômes.) Tj
+T* () Tj
+T* (**Règles à suivre :**) Tj
+T* () Tj
+T* (1. **Ne pas prendre de médicaments sans consulter un médecin** : Il est important de ne pas prendre de) Tj
+T* (médicaments sans consulter un médecin, en particulier si les symptômes s'aggravent ou si des complications) Tj
+T* (sont suspectées.) Tj
+T* (2. **Ne pas oublier de boire suffisamment d'eau** : Il est important de boire suffisamment d'eau pour éviter la) Tj
+T* (déshydratation.) Tj
+T* (3. **Ne pas manger des aliments gras ou lourds** : Il est recommandé de manger des repas légers et) Tj
+T* (réguliers, en évitant les aliments gras ou lourds qui peuvent aggraver les symptômes.) Tj
+T* () Tj
+T* (**Risque élevé \(URGENT\) :**) Tj
+T* () Tj
+T* (* Niveau de risque : LOW) Tj
+T* (* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation) Tj
+T* (standards et surveiller l'évolution.) Tj
+T* () Tj
+T* (**Conclusion :**) Tj
+T* () Tj
+T* (Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications. Il est) Tj
+T* (recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée. Il) Tj
+T* (est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des) Tj
+T* (nausées et vomissements.) Tj
+ET
+BT
+/F2 14 Tf
+16.0999999999999979 TL
+0.118 0.251 0.686 rg
+56.6929133858267775 393.3356692913386041 Td
+(Physician Review & Treatment Plan) Tj
+ET
+BT
+/F1 10 Tf
+11.5 TL
+0. g
+56.6929133858267775 362.3586614173228213 Td
+(### Physician Review) Tj
+T* () Tj
+T* (After reviewing the case, the symptoms are most consistent with **acute gastroenteritis likely of foodborne) Tj
+T* (origin**.) Tj
+T* () Tj
+T* (No red flags or signs of severe complication are identified at this stage.) Tj
+T* () Tj
+T* (### Decision) Tj
+T* () Tj
+T* (* Supportive treatment with hydration and rest) Tj
+T* (* Light diet recommended) Tj
+T* (* Avoid NSAIDs \(e.g., ibuprofen\)) Tj
+T* () Tj
+T* (### Follow-up) Tj
+T* () Tj
+T* (* Consult if symptoms worsen or persist beyond 48–72h) Tj
+T* (* Seek care if dehydration signs appear) Tj
+T* () Tj
+T* (### Conclusion) Tj
+T* () Tj
+T* (No emergency intervention required. Outpatient management and monitoring are appropriate.) Tj
+T* () Tj
+ET
+BT
+/F2 12 Tf
+13.7999999999999989 TL
+0.02 0.588 0.412 rg
+56.6929133858267775 120.1665354330708624 Td
+(Final Status: Completed) Tj
+ET
+0.89 0.91 0.94 RG
+1.4173228346456694 w
+56.6929133858267775 79.8465354330707839 m
+538.5870866141731312 79.8465354330707839 l
+S
+endstream
+endobj
+9 0 obj
+<</Type /Page
+/Parent 1 0 R
+/Resources 2 0 R
+/MediaBox [0 0 595.2799999999999727 841.8899999999999864]
+/Contents 10 0 R
+>>
+endobj
+10 0 obj
+<<
+/Length 608
+>>
+stream
+1.4173228346456694 w
+0.89 0.91 0.94 RG
+BT
+/F2 9 Tf
+10.3499999999999996 TL
+0.937 0.267 0.267 rg
+56.6929133858267775 785.1970866141732586 Td
+(& þ   D I S C L A I M E R :   T h i s   s y s t e m   d o e s   n o t   r e p l a c e   a   m e d i c a l   c o n s u l t a t i o n .) Tj
+ET
+BT
+/F1 9 Tf
+10.3499999999999996 TL
+0.42 0.447 0.502 rg
+56.6929133858267775 770.5476377952755911 Td
+(All recommendations should be validated by qualified healthcare professionals.) Tj
+ET
+BT
+/F1 8 Tf
+9.1999999999999993 TL
+0.612 0.639 0.686 rg
+56.6929133858267775 750.2288976377952849 Td
+(Generated on: 21/06/2026 13:39:31) Tj
+ET
+endstream
+endobj
+1 0 obj
+<</Type /Pages
+/Kids [3 0 R 5 0 R 7 0 R 9 0 R ]
+/Count 4
+>>
+endobj
+11 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+12 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+13 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+14 0 obj
+<<
+/Type /Font
+/BaseFont /Helvetica-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+15 0 obj
+<<
+/Type /Font
+/BaseFont /Courier
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+16 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+17 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-Oblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+18 0 obj
+<<
+/Type /Font
+/BaseFont /Courier-BoldOblique
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+19 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Roman
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+20 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Bold
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+21 0 obj
+<<
+/Type /Font
+/BaseFont /Times-Italic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+22 0 obj
+<<
+/Type /Font
+/BaseFont /Times-BoldItalic
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+23 0 obj
+<<
+/Type /Font
+/BaseFont /ZapfDingbats
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+24 0 obj
+<<
+/Type /Font
+/BaseFont /Symbol
+/Subtype /Type1
+/FirstChar 32
+/LastChar 255
+>>
+endobj
+2 0 obj
+<<
+/ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/Font <<
+/F1 11 0 R
+/F2 12 0 R
+/F3 13 0 R
+/F4 14 0 R
+/F5 15 0 R
+/F6 16 0 R
+/F7 17 0 R
+/F8 18 0 R
+/F9 19 0 R
+/F10 20 0 R
+/F11 21 0 R
+/F12 22 0 R
+/F13 23 0 R
+/F14 24 0 R
+>>
+/XObject <<
+>>
+>>
+endobj
+25 0 obj
+<<
+/Producer (jsPDF 4.2.1)
+/CreationDate (D:20260621133931+01'00')
+>>
+endobj
+26 0 obj
+<<
+/Type /Catalog
+/Pages 1 0 R
+/OpenAction [3 0 R /FitH null]
+/PageLayout /OneColumn
+>>
+endobj
+xref
+0 27
+0000000000 65535 f 
+0000012666 00000 n 
+0000014506 00000 n 
+0000000015 00000 n 
+0000000152 00000 n 
+0000004713 00000 n 
+0000004850 00000 n 
+0000007867 00000 n 
+0000008004 00000 n 
+0000011868 00000 n 
+0000012006 00000 n 
+0000012741 00000 n 
+0000012867 00000 n 
+0000012998 00000 n 
+0000013132 00000 n 
+0000013270 00000 n 
+0000013394 00000 n 
+0000013523 00000 n 
+0000013655 00000 n 
+0000013791 00000 n 
+0000013919 00000 n 
+0000014046 00000 n 
+0000014175 00000 n 
+0000014308 00000 n 
+0000014410 00000 n 
+0000014759 00000 n 
+0000014845 00000 n 
+trailer
+<<
+/Size 27
+/Root 26 0 R
+/Info 25 0 R
+/ID [ <CC53401EB58693CAE283914F28B4C7E2> <CC53401EB58693CAE283914F28B4C7E2> ]
+>>
+startxref
+14949
+%%EOF

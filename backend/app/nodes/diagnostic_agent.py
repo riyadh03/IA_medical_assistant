@@ -1,5 +1,7 @@
 import asyncio
 import os
+import sys
+import json
 from typing import Dict, Any
 from langgraph.types import interrupt
 from mcp import ClientSession, StdioServerParameters
@@ -17,8 +19,8 @@ QUESTIONS = [
     "Prenez-vous un traitement ou des médicaments actuellement ?"
 ]
 
-async def get_guidelines_from_mcp(symptom: str) -> str:
-    """Queries the MCP server for clinical guidelines regarding the symptom."""
+async def query_mcp_tools(chief_complaint: str, fever: bool, breathing: bool, chest: bool) -> tuple:
+    """Queries the MCP server for web medical search and local red flags."""
     server_path = "/mcp_server/server.py"
     if not os.path.exists(server_path):
         # Fallback to local path relative to this file
@@ -26,30 +28,50 @@ async def get_guidelines_from_mcp(symptom: str) -> str:
         server_path = os.path.abspath(os.path.join(base_dir, "..", "..", "..", "mcp_server", "server.py"))
         
     if not os.path.exists(server_path):
-        print(f"⚠️ [MCP Client] Serveur introuvable à {server_path}, skipping MCP call.")
-        return None
+        print(f"⚠️ [MCP Client] Serveur introuvable à {server_path}, skipping MCP calls.", file=sys.stderr)
+        return None, None
 
-    print(f"🔌 [MCP Client] Connexion au serveur MCP à {server_path}...")
+    print(f"🔌 [MCP Client] Connexion au serveur MCP à {server_path}...", file=sys.stderr)
     server_params = StdioServerParameters(
         command="python",
         args=[server_path],
         env=os.environ.copy()
     )
     
+    search_results = None
+    red_flags_data = None
+    
     try:
         async with stdio_client(server_params) as (read_stream, write_stream):
             async with ClientSession(read_stream, write_stream) as session:
                 await session.initialize()
-                print(f"🔌 [MCP Client] Session initialisée. Appel de 'medical_guidelines' pour: '{symptom}'")
-                response = await session.call_tool("medical_guidelines", {"symptom": symptom})
-                if response.content and len(response.content) > 0:
-                    guidelines = response.content[0].text
-                    print(f"🔌 [MCP Client] Guidelines reçues : {guidelines}")
-                    return guidelines
-                return None
+                print("🔌 [MCP Client] Session initialisée.", file=sys.stderr)
+                
+                # 1. Call red_flag_checker
+                print(f"🔌 [MCP Client] Appel 'red_flag_checker' (fever={fever}, breathing={breathing}, chest={chest})", file=sys.stderr)
+                flag_res = await session.call_tool("red_flag_checker", {
+                    "fever": fever,
+                    "breathing_difficulty": breathing,
+                    "chest_pain": chest
+                })
+                if flag_res.content and len(flag_res.content) > 0:
+                    red_flags_data = json.loads(flag_res.content[0].text)
+                    print(f"🔌 [MCP Client] Réponse red_flags : {red_flags_data.get('risk_level')}", file=sys.stderr)
+                
+                # 2. Call web_medical_search
+                search_query = f"clinical guidelines orientation warning signs {chief_complaint}"
+                print(f"🔌 [MCP Client] Appel 'web_medical_search' pour: '{search_query}'", file=sys.stderr)
+                search_res = await session.call_tool("web_medical_search", {
+                    "query": search_query
+                })
+                if search_res.content and len(search_res.content) > 0:
+                    search_results = search_res.content[0].text
+                    print(f"🔌 [MCP Client] Réponse search obtenue.", file=sys.stderr)
+                    
+        return search_results, red_flags_data
     except Exception as e:
-        print(f"⚠️ [MCP Client] Échec de la communication avec le serveur MCP: {e}")
-        return None
+        print(f"⚠️ [MCP Client] Échec de la communication avec le serveur MCP: {e}", file=sys.stderr)
+        return None, None
 
 def diagnostic_agent_node(state: MedicalState) -> Dict[str, Any]:
     q_count = state.get("question_count", 0)
@@ -59,7 +81,21 @@ def diagnostic_agent_node(state: MedicalState) -> Dict[str, Any]:
     
     # 1. Dialogue Loop: Use interrupt to collect the answer via API/Runner
     if q_count < 5:
-        question_text = QUESTIONS[q_count]
+        chief_complaint = state.get("chief_complaint", "Non spécifié")
+        patient_info = {
+            "name": state.get("patient_name", "Non spécifié"),
+            "age": state.get("patient_age", "Non spécifié"),
+            "gender": state.get("patient_gender", "Non spécifié")
+        }
+        
+        # Generate question dynamically via LLM client
+        question_text = llm_client.generate_next_question(
+            chief_complaint=chief_complaint,
+            patient_info=patient_info,
+            question_answers=q_answers,
+            question_count=q_count
+        )
+        
         print(f"\n🩺 [Diagnostic Agent] Interruption pour recueillir la réponse à la question {q_count + 1}/5...")
         
         # Interrupt graph execution and return the question details
@@ -87,18 +123,39 @@ def diagnostic_agent_node(state: MedicalState) -> Dict[str, Any]:
     
     chief_complaint = state.get("chief_complaint", "Non spécifié")
     
-    # Query MCP server for guidelines
-    mcp_guidelines = None
+    # 2.1 Dynamically analyze symptoms from chief complaint and answers
+    comp_lower = chief_complaint.lower()
+    fever_flag = any(kw in comp_lower for kw in ["fièvre", "fievre", "température", "temperature", "fever", "chaud"])
+    breathing_flag = any(kw in comp_lower for kw in ["essoufflement", "respirer", "difficulté à respirer", "dyspnée", "gêne respiratoire", "respiration", "breathing"])
+    chest_flag = any(kw in comp_lower for kw in ["poitrine", "chest", "coeur", "cœur", "douleur thoracique", "cardiaque"])
+    
+    for qa in q_answers:
+        ans = qa.get("answer", "").lower()
+        if any(kw in ans for kw in ["fièvre", "fievre", "température", "temperature", "fever", "chaud"]):
+            if not any(neg in ans for neg in ["pas de", "aucune", "no ", "sans "]):
+                fever_flag = True
+        if any(kw in ans for kw in ["essoufflement", "respirer", "difficulté à respirer", "dyspnée", "gêne respiratoire", "respiration", "breathing"]):
+            if not any(neg in ans for neg in ["pas de", "aucune", "no ", "sans "]):
+                breathing_flag = True
+        if any(kw in ans for kw in ["poitrine", "chest", "coeur", "cœur", "douleur thoracique", "cardiaque"]):
+            if not any(neg in ans for neg in ["pas de", "aucune", "no ", "sans "]):
+                chest_flag = True
+                
+    # 2.2 Query MCP Server tools (web search + red flags checker)
+    search_context = None
+    red_flags = None
     try:
-        mcp_guidelines = asyncio.run(get_guidelines_from_mcp(chief_complaint))
+        search_context, red_flags = asyncio.run(query_mcp_tools(
+            chief_complaint, fever_flag, breathing_flag, chest_flag
+        ))
     except Exception as e:
-        print(f"⚠️ [Diagnostic Agent] Échec lors de l'exécution de la requête MCP: {e}")
+        print(f"⚠️ [Diagnostic Agent] Échec lors de la requête MCP: {e}", file=sys.stderr)
     
-    # Generate clinical synthesis
-    synthesis = llm_client.generate_synthesis(chief_complaint, q_answers)
+    # 2.3 Generate clinical synthesis incorporating search results and red flags
+    synthesis = llm_client.generate_synthesis(chief_complaint, q_answers, search_context, red_flags)
     
-    # Generate interim care recommendations (integrating MCP guidelines)
-    care = llm_client.generate_interim_care(synthesis, mcp_guidelines)
+    # 2.4 Generate interim care recommendations incorporating search results and red flags
+    care = llm_client.generate_interim_care(synthesis, search_context, red_flags)
     
     print("🩺 [Diagnostic Agent] Synthèse clinique et recommandations d'urgence complétées.")
     return {

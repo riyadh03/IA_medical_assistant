@@ -101,7 +101,7 @@ export default function FinalReportPage() {
       const fileName = `clinical-report-${consultation.patientName.replace(/\s+/g, '-').toLowerCase()}-${Date.now()}.pdf`
       await generateConsultationPDF(reportData, fileName)
     } catch (error) {
-      console.error('[v0] PDF generation failed:', error)
+      console.error('[App] PDF generation failed:', error)
       alert('Failed to generate PDF. Please try again.')
     } finally {
       setIsGeneratingPDF(false)

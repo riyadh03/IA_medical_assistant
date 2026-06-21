@@ -69,7 +69,7 @@ graph TD
 
 ### Agents Obligatoires
 1. **Supervisor** : Orchestre le workflow et prend la décision de la prochaine étape à exécuter en fonction de l'état.
-2. **Diagnostic Agent** : Pose exactement 5 questions de suivi au patient, réalise une pré-analyse et produit une synthèse clinique préliminaire.
+2. **Diagnostic Agent** : Pose exactement 5 questions de suivi générées de manière 100% dynamique par le LLM (s'adaptant à la plainte et au profil du patient), réalise une pré-analyse et produit une synthèse clinique préliminaire.
 3. **Physician Review** : Étape Human-in-the-Loop (HITL) représentant le médecin traitant. Elle interrompt le graphe pour recueillir l'avis médical.
 4. **Report Agent** : Génère le rapport final structuré incluant les avertissements éthiques.
 
@@ -110,12 +110,13 @@ class MedicalState(TypedDict, total=False):
 
 ---
 
-## 🔌 Intégration du Protocole MCP
+## 🔌 Intégration du Protocole MCP, Recherche RAG & Sécurité
 
-L'utilisation du **Model Context Protocol (MCP)** est intégrée pour fournir aux agents des informations de référence (guidelines médicales).
-- **mcp_server/server.py** : Un serveur MCP qui expose l'outil `medical_guidelines(symptom: str)`.
-- **Exemple de retour** : Pour `symptom="fever"`, l'outil renvoie : *« Hydratation abondante, repos au lit, surveillance de la température toutes les 4h, consultation si > 39°C ou persistance > 48h. »*
-- Le **Diagnostic Agent** interroge ce serveur MCP pour enrichir son traitement des recommandations temporaires.
+L'utilisation du **Model Context Protocol (MCP)** est intégrée pour fournir aux agents une recherche médicale dynamique externe (RAG) et une évaluation locale de sécurité :
+- **mcp_server/server.py** : Un serveur MCP qui expose deux outils :
+  1. **`web_medical_search(query: str) -> str`** : Outil de RAG dynamique interrogeant l'API Tavily pour obtenir des résumés de guidelines médicales récentes et des sources réelles. En cas d'échec ou d'absence de clé, il bascule sur un simulateur de recherche clinique local de haute qualité (HAS, CDC, Mayo Clinic).
+  2. **`red_flag_checker(fever, breathing_difficulty, chest_pain) -> str`** : Outil local déterminant le niveau de gravité d'un dossier (`URGENT`, `MODERATE`, `LOW`) pour alerter le LLM et imposer des consignes de sécurité (ex. appeler le 15/SAMU en cas de douleurs thoraciques).
+- Le **Diagnostic Agent** établit une connexion stdio asynchrone avec ce serveur pour collecter ces données et guider la génération de la synthèse et des recommandations intermédiaires.
 
 ---
 
@@ -195,39 +196,60 @@ Ce projet est planifié en **5 Sprints** progressifs, chacun débouchant sur un 
 ## 🛠️ Guide d'Installation et Exécution
 
 ### Prérequis
-- Python 3.10+
-- Node.js (si frontend React/Angular)
-- Clé API OpenAI (configurée dans un fichier `.env` ou variable d'environnement)
+- Docker et Docker Compose
+- Clé d'API pour au moins l'un des fournisseurs LLM suivants dans `backend/.env` :
+  - `OPENAI_API_KEY` (OpenAI native)
+  - `OPENROUTER_API_KEY` (Mistral/Llama/etc.)
+  - `GEMINI_API_KEY` (Gemini API)
+- Clé d'API Tavily pour la recherche RAG (optionnel) :
+  - `TAVILY_API_KEY` (Si manquante, le serveur MCP bascule sur un simulateur de recherche médicale locale)
 
-### Configuration locale rapide
+### Configuration des Variables d'Environnement
+Créez un fichier `.env` dans le dossier `backend/` en vous basant sur [backend/.env.example](file:///c:/Users/riyad/OneDrive/Desktop/UNIVERSITE%20S8/AGENTIC%20AI/IA_medical_assistant/backend/.env.example) :
+```ini
+OPENAI_API_KEY=your_openai_api_key
+OPENROUTER_API_KEY=your_openrouter_api_key
+GEMINI_API_KEY=your_gemini_api_key
+TAVILY_API_KEY=your_tavily_api_key
+LLM_MODEL=gpt-4o-mini
+```
 
-1. **Cloner le projet et configurer le backend** :
+---
+
+### Lancement via Docker Compose (Recommandé)
+Pour compiler et démarrer l'ensemble des services (FastAPI Backend, Next.js Frontend, SQLite DB et serveur MCP) :
+
+```bash
+docker-compose up --build
+```
+
+Une fois les conteneurs démarrés :
+- 🖥️ **Interface Utilisateur Next.js** : [http://localhost:3002](http://localhost:3002)
+- ⚡ **Documentation API FastAPI Swagger** : [http://localhost:8080/docs](http://localhost:8080/docs)
+- 💾 **Persistance SQLite** : Base de données créée et montée localement dans `backend/data/medical.db`.
+
+---
+
+### Exécution Locale Manuelle (Sans Docker)
+
+1. **Configurer et lancer le Backend (FastAPI + Graphe)** :
    ```bash
    cd backend
    python -m venv venv
-   source venv/bin/activate  # Ou venv\Scripts\activate sous Windows
+   source venv/bin/activate # ou venv\Scripts\activate sous Windows
    pip install -r requirements.txt
+   uvicorn main:app --reload --port 8080
    ```
 
-2. **Lancer le serveur API** :
+2. **Lancer le Frontend Next.js** :
    ```bash
-   # Depuis le dossier backend/
-   uvicorn app.api:app --reload --port 8000
+   cd frontend
+   pnpm install # ou npm install
+   pnpm dev # ou npm run dev (Le frontend démarre sur http://localhost:3000)
    ```
 
-3. **Lancer le serveur MCP** :
+3. **Exécuter les Tests d'Intégration** :
+   Pour valider le bon fonctionnement du graphe, des outils MCP et de l'API REST :
    ```bash
-   cd ../mcp_server
-   python server.py
-   ```
-
-4. **Lancer l'interface utilisateur (Streamlit/React)** :
-   ```bash
-   cd ../frontend
-   # Commandes adaptées selon la technologie retenue (ex: npm run dev ou streamlit run app.py)
-   ```
-
-5. **Exécution Docker-compose** :
-   ```bash
-   docker-compose up --build
+   python backend/test_api.py
    ```
