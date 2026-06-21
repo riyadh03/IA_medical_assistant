@@ -1,0 +1,48 @@
+\babel@toc {french}{}\relax 
+\contentsline {section}{Dédicaces}{1}{Doc-Start}%
+\contentsline {section}{Remerciements}{2}{Doc-Start}%
+\contentsline {section}{Résumé}{3}{Doc-Start}%
+\contentsline {section}{Abstract}{4}{Doc-Start}%
+\contentsline {section}{Introduction Générale}{7}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}Contexte et Objectifs}{8}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Contexte Technique}{8}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Problématique}{8}{section.1.2}%
+\contentsline {section}{\numberline {1.3}Objectifs du Projet}{8}{section.1.3}%
+\contentsline {chapter}{\numberline {2}Analyse des Besoins et Spécifications}{9}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Exigences Fonctionnelles}{9}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Exigences Non-Fonctionnelles}{9}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Clauses Éthiques et Académiques}{9}{section.2.3}%
+\contentsline {chapter}{\numberline {3}Architecture Globale et Multi-Agents}{10}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Schéma Directeur de l'Architecture}{10}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Modélisation du Graphe LangGraph}{11}{section.3.2}%
+\contentsline {chapter}{\numberline {4}Serveur MCP et Recherche RAG}{12}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Le protocole Model Context Protocol}{12}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Outils MCP implémentés}{12}{section.4.2}%
+\contentsline {chapter}{\numberline {5}Modélisation et Persistance des États}{13}{chapter.5}%
+\contentsline {section}{\numberline {5.1}Structure de l'État Partagé}{13}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Persistance SQLite}{13}{section.5.2}%
+\contentsline {chapter}{\numberline {6}Conception et Implémentation des Endpoints API}{14}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Tableau des Endpoints REST}{14}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Schémas de Validation Pydantic}{14}{section.6.2}%
+\contentsline {chapter}{\numberline {7}Développement de l'Interface Utilisateur}{15}{chapter.7}%
+\contentsline {section}{\numberline {7.1}Parcours Utilisateur Next.js}{15}{section.7.1}%
+\contentsline {subsection}{\numberline {7.1.1}Tableau de Bord Clinique et Admission}{15}{subsection.7.1.1}%
+\contentsline {subsection}{\numberline {7.1.2}Entretien Interactif Conversationnel}{16}{subsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.1.3}Synthèse Clinique et Espace Médecin}{16}{subsection.7.1.3}%
+\contentsline {subsection}{\numberline {7.1.4}Rapport Final et Téléchargement}{17}{subsection.7.1.4}%
+\contentsline {chapter}{\numberline {8}Tests, Scénarios d'Orientation et Validation}{19}{chapter.8}%
+\contentsline {section}{\numberline {8.1}Cas Clinique 1 : Syndrome Abdominal (Émilie Roux)}{19}{section.8.1}%
+\contentsline {subsection}{\numberline {8.1.1}Données d'Admission}{19}{subsection.8.1.1}%
+\contentsline {subsection}{\numberline {8.1.2}Entretien Clinique Dynamique}{19}{subsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.1.3}Évaluation Clinique Intermédiaire et Avis du Médecin}{20}{subsection.8.1.3}%
+\contentsline {subsection}{\numberline {8.1.4}Rapport Final Structuré Généré}{20}{subsection.8.1.4}%
+\contentsline {section}{\numberline {8.2}Cas Clinique 2 : Infection Respiratoire (Michel Lambert)}{21}{section.8.2}%
+\contentsline {subsection}{\numberline {8.2.1}Données d'Admission}{21}{subsection.8.2.1}%
+\contentsline {subsection}{\numberline {8.2.2}Entretien Clinique Dynamique}{21}{subsection.8.2.2}%
+\contentsline {subsection}{\numberline {8.2.3}Évaluation Clinique Intermédiaire et Avis du Médecin}{21}{subsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.2.4}Rapport Final Structuré Généré}{22}{subsection.8.2.4}%
+\contentsline {chapter}{\numberline {9}Limites Éthiques et Perspectives}{23}{chapter.9}%
+\contentsline {section}{\numberline {9.1}Limites Actuelles}{23}{section.9.1}%
+\contentsline {section}{\numberline {9.2}Perspectives}{23}{section.9.2}%
+\contentsline {section}{Conclusion Générale}{24}{section.9.2}%
+\contentsline {section}{Webographie}{25}{section.9.2}%

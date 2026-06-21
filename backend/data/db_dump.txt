@@ -1,0 +1,206 @@
+=== PATIENT ===
+Name: Émilie Roux | Age: 24 | Gender: Féminin
+Chief Complaint: Nausées, vomissements et crampes abdominales depuis la nuit dernière.
+
+=== QUESTIONS & ANSWERS ===
+Q1: Quelle est votre alimentation typique pendant les derniers jours, et avez-vous apporté des changements récents dans votre régime alimentaire ?
+A1: Depuis deux jours, j'ai mangé plusieurs repas à l'extérieur, notamment un sandwich au poulet et une salade dans un restaurant. Je n'ai pas fait de changement particulier dans mon alimentation habituelle, mais certains aliments ne me semblaient pas très frais.
+Q2: Avez-vous déjà pris des médicaments ou consommé des produits contenant des substances qui pourraient agir sur votre système digestif, tels que les antacides, les anti-inflammatoires non stéroïdiens (AINS) ou les diurétiques ?
+A2: Oui, j'ai pris de l'ibuprofène hier pour un mal de tête, mais je ne prends pas habituellement d'autres médicaments et je n'ai pas utilisé d'antacides ou de diurétiques récemment.
+Q3: Avez-vous ressenti des douleurs ou des ballonnements abdominaux, ou avez-vous eu des déjections anormales, notamment après avoir consommé le sandwich au poulet et la salade dans le restaurant ?
+A3: Oui, quelques heures après avoir mangé le sandwich et la salade, j'ai commencé à ressentir des crampes abdominales et des ballonnements. J'ai également eu plusieurs épisodes de diarrhée depuis cette nuit.
+Q4: Avez-vous déjà été exposée à un agent pathogène, tel qu'une bactérie, un virus ou un parasite, qui pourrait être à l'origine de vos symptômes actuels de nausées, vomissements et crampes abdominales ?
+A4: Pas que je sache. Je n’ai pas été malade récemment et je n’ai pas eu de contact avec des personnes présentant des symptômes similaires. Je n’ai pas voyagé non plus et je ne pense pas avoir été exposée à une infection particulière.
+Q5: Avez-vous déjà été enceinte ou avez-vous eu des problèmes de grossesse dans le passé, et avez-vous des antécédents familiaux de maladies digestives ou de problèmes de santé liés à la grossesse ?
+A5: Non, je n’ai jamais été enceinte. Dans ma famille, il n’y a pas d’antécédents connus de maladies digestives ou de complications liées à la grossesse.
+
+=== CLINICAL SUMMARY ===
+**Synthèse Clinique Préliminaire**
+
+**Patient :** [Nom du patient] (âge, sexe, etc.)
+
+**Plainte principale :** Nausées, vomissements et crampes abdominales depuis la nuit dernière.
+
+**Analyse des réponses aux questions de suivi :**
+
+* L'alimentation typique des derniers jours a été modifiée avec des repas à l'extérieur, notamment un sandwich au poulet et une salade dans un restaurant.
+* Des médicaments ont été pris, notamment de l'ibuprofène pour un mal de tête.
+* Des douleurs abdominales et des ballonnements ont été ressentis après avoir consommé le sandwich et la salade.
+* Des épisodes de diarrhée ont été observés depuis cette nuit.
+
+**Résultats de la recherche médicale externe :**
+
+* Les symptômes persistent et peuvent indiquer des problèmes gastro-intestinaux tels que la gastroparesis.
+* Les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements ont été trouvés.
+
+**Évaluation de sécurité (Red Flags locaux) :**
+
+* Niveau de risque : LOW
+* Recommandation urgente : False
+* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation standards et surveiller l'évolution.
+
+**Orientation Clinique Préliminaire :**
+
+* Il est recommandé de surveiller l'évolution des symptômes et de rechercher des signes de complications, tels que des douleurs abdominales aigues, des ballonnements sévères ou des signes de déshydratation.
+* Il est conseillé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée.
+* Il est recommandé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+
+**Contexte :**
+
+* La gastroparesis est une condition caractérisée par une défaillance du système digestif, entraînant des nausées, des vomissements et des douleurs abdominales.
+* Les antécédents familiaux de maladies digestives ou de problèmes de santé liés à la grossesse ne sont pas connus.
+
+**Conclusion :**
+
+* Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications.
+* Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée.
+* Il est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+=== INTERIM CARE ===
+**Recommandations intermédiaires générales et prudentes :**
+
+1. **Surveillance continue** : Il est recommandé de surveiller l'évolution des symptômes, en particulier les nausées, les vomissements et les douleurs abdominales. Il est important de rechercher des signes de complications, tels que des ballonnements sévères ou des signes de déshydratation.
+2. **Hydratation** : Il est conseillé de boire suffisamment d'eau pour éviter la déshydratation. Il est recommandé de boire au moins 8 verres d'eau par jour.
+3. **Alimentation modérée** : Il est recommandé de manger des repas légers et réguliers, en évitant les aliments gras ou lourds qui peuvent aggraver les symptômes.
+4. **Éviter les médicaments** : Il est conseillé d'éviter de prendre des médicaments qui peuvent aggraver les symptômes, tels que l'ibuprofène.
+5. **Consulter un médecin** : Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée. Il est important de discuter des symptômes et des antécédents médicaux pour déterminer la cause sous-jacente des symptômes.
+
+**Règles à suivre :**
+
+1. **Ne pas prendre de médicaments sans consulter un médecin** : Il est important de ne pas prendre de médicaments sans consulter un médecin, en particulier si les symptômes s'aggravent ou si des complications sont suspectées.
+2. **Ne pas oublier de boire suffisamment d'eau** : Il est important de boire suffisamment d'eau pour éviter la déshydratation.
+3. **Ne pas manger des aliments gras ou lourds** : Il est recommandé de manger des repas légers et réguliers, en évitant les aliments gras ou lourds qui peuvent aggraver les symptômes.
+
+**Risque élevé (URGENT) :**
+
+* Niveau de risque : LOW
+* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation standards et surveiller l'évolution.
+
+**Conclusion :**
+
+Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications. Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée. Il est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+=== PHYSICIAN REVIEW ===
+### Physician Review
+
+After reviewing the case, the symptoms are most consistent with **acute gastroenteritis likely of foodborne origin**.
+
+No red flags or signs of severe complication are identified at this stage.
+
+### Decision
+
+* Supportive treatment with hydration and rest
+* Light diet recommended
+* Avoid NSAIDs (e.g., ibuprofen)
+
+### Follow-up
+
+* Consult if symptoms worsen or persist beyond 48–72h
+* Seek care if dehydration signs appear
+
+### Conclusion
+
+No emergency intervention required. Outpatient management and monitoring are appropriate.
+
+=== FINAL REPORT ===
+============================================================
+          RAPPORT CLINIQUE D'ORIENTATION PRÉLIMINAIRE
+============================================================
+INFORMATIONS PATIENT
+---------------------
+Nom : Émilie Roux
+Âge : 24 ans | Genre : Féminin
+Motif initial : Nausées, vomissements et crampes abdominales depuis la nuit dernière.
+
+RÉSULTATS DE L'ORIENTATION
+---------------------------
+Synthèse clinique :
+**Synthèse Clinique Préliminaire**
+
+**Patient :** [Nom du patient] (âge, sexe, etc.)
+
+**Plainte principale :** Nausées, vomissements et crampes abdominales depuis la nuit dernière.
+
+**Analyse des réponses aux questions de suivi :**
+
+* L'alimentation typique des derniers jours a été modifiée avec des repas à l'extérieur, notamment un sandwich au poulet et une salade dans un restaurant.
+* Des médicaments ont été pris, notamment de l'ibuprofène pour un mal de tête.
+* Des douleurs abdominales et des ballonnements ont été ressentis après avoir consommé le sandwich et la salade.
+* Des épisodes de diarrhée ont été observés depuis cette nuit.
+
+**Résultats de la recherche médicale externe :**
+
+* Les symptômes persistent et peuvent indiquer des problèmes gastro-intestinaux tels que la gastroparesis.
+* Les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements ont été trouvés.
+
+**Évaluation de sécurité (Red Flags locaux) :**
+
+* Niveau de risque : LOW
+* Recommandation urgente : False
+* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation standards et surveiller l'évolution.
+
+**Orientation Clinique Préliminaire :**
+
+* Il est recommandé de surveiller l'évolution des symptômes et de rechercher des signes de complications, tels que des douleurs abdominales aigues, des ballonnements sévères ou des signes de déshydratation.
+* Il est conseillé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée.
+* Il est recommandé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+
+**Contexte :**
+
+* La gastroparesis est une condition caractérisée par une défaillance du système digestif, entraînant des nausées, des vomissements et des douleurs abdominales.
+* Les antécédents familiaux de maladies digestives ou de problèmes de santé liés à la grossesse ne sont pas connus.
+
+**Conclusion :**
+
+* Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications.
+* Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée.
+* Il est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+
+Recommandations temporaires :
+**Recommandations intermédiaires générales et prudentes :**
+
+1. **Surveillance continue** : Il est recommandé de surveiller l'évolution des symptômes, en particulier les nausées, les vomissements et les douleurs abdominales. Il est important de rechercher des signes de complications, tels que des ballonnements sévères ou des signes de déshydratation.
+2. **Hydratation** : Il est conseillé de boire suffisamment d'eau pour éviter la déshydratation. Il est recommandé de boire au moins 8 verres d'eau par jour.
+3. **Alimentation modérée** : Il est recommandé de manger des repas légers et réguliers, en évitant les aliments gras ou lourds qui peuvent aggraver les symptômes.
+4. **Éviter les médicaments** : Il est conseillé d'éviter de prendre des médicaments qui peuvent aggraver les symptômes, tels que l'ibuprofène.
+5. **Consulter un médecin** : Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée. Il est important de discuter des symptômes et des antécédents médicaux pour déterminer la cause sous-jacente des symptômes.
+
+**Règles à suivre :**
+
+1. **Ne pas prendre de médicaments sans consulter un médecin** : Il est important de ne pas prendre de médicaments sans consulter un médecin, en particulier si les symptômes s'aggravent ou si des complications sont suspectées.
+2. **Ne pas oublier de boire suffisamment d'eau** : Il est important de boire suffisamment d'eau pour éviter la déshydratation.
+3. **Ne pas manger des aliments gras ou lourds** : Il est recommandé de manger des repas légers et réguliers, en évitant les aliments gras ou lourds qui peuvent aggraver les symptômes.
+
+**Risque élevé (URGENT) :**
+
+* Niveau de risque : LOW
+* Message : Aucun drapeau rouge de gravité immédiate détecté. Suivre les recommandations d'orientation standards et surveiller l'évolution.
+
+**Conclusion :**
+
+Il est important de surveiller l'évolution des symptômes et de rechercher des signes de complications. Il est recommandé de consulter un médecin pour une évaluation approfondie et une prise en charge appropriée. Il est conseillé de suivre les recommandations de soins et les outils de prescription pour la gestion des nausées et vomissements.
+
+Avis & Traitement du médecin :
+### Physician Review
+
+After reviewing the case, the symptoms are most consistent with **acute gastroenteritis likely of foodborne origin**.
+
+No red flags or signs of severe complication are identified at this stage.
+
+### Decision
+
+* Supportive treatment with hydration and rest
+* Light diet recommended
+* Avoid NSAIDs (e.g., ibuprofen)
+
+### Follow-up
+
+* Consult if symptoms worsen or persist beyond 48–72h
+* Seek care if dehydration signs appear
+
+### Conclusion
+
+No emergency intervention required. Outpatient management and monitoring are appropriate.
+
+
+------------------------------------------------------------
+⚠️ AVERTISSEMENT : Ce système ne remplace pas une consultation médicale.
+============================================================
